@@ -1,0 +1,91 @@
+[
+  {
+    "control_id": "gh.main.required_reviews_codeowners",
+    "at": "2026-11-02T14:05:00Z",
+    "actor": {
+      "id": "human:dana.platform-lead",
+      "type": "human"
+    },
+    "approval": null,
+    "ref": "CHG-101"
+  },
+  {
+    "control_id": "gh.main.enforce_admins",
+    "at": "2026-11-03T02:11:00Z",
+    "actor": {
+      "id": "agent:release-bot",
+      "type": "agent"
+    },
+    "approval": null,
+    "ref": "run-8841"
+  },
+  {
+    "control_id": "gh.main.required_status_checks",
+    "at": "2026-11-03T02:12:00Z",
+    "actor": {
+      "id": "agent:release-bot",
+      "type": "agent"
+    },
+    "approval": {
+      "approver": {
+        "id": "agent:release-bot",
+        "type": "agent"
+      },
+      "ticket": "AUTO-1",
+      "at": "2026-11-03T02:12:00Z"
+    },
+    "ref": "run-8841"
+  },
+  {
+    "control_id": "alerts.sev2.route",
+    "at": "2026-11-02T16:00:00Z",
+    "actor": {
+      "id": "human:sam.sre-manager",
+      "type": "human"
+    },
+    "approval": {
+      "approver": {
+        "id": "human:sam.sre-manager",
+        "type": "human"
+      },
+      "ticket": "CHG-102",
+      "at": "2026-11-02T15:55:00Z"
+    },
+    "ref": "CHG-102"
+  },
+  {
+    "control_id": "audit.sink.enabled",
+    "at": "2026-11-04T09:00:00Z",
+    "actor": {
+      "id": "human:ari.platform-eng",
+      "type": "human"
+    },
+    "approval": {
+      "approver": {
+        "id": "human:lee.security-owner",
+        "type": "human"
+      },
+      "ticket": "CHG-103",
+      "expires": "2026-11-05T09:00:00Z",
+      "at": "2026-11-04T08:40:00Z"
+    },
+    "ref": "CHG-103"
+  },
+  {
+    "control_id": "audit.sink.retention_days",
+    "at": "2026-11-04T03:30:00Z",
+    "actor": {
+      "id": "agent:release-bot",
+      "type": "agent"
+    },
+    "approval": {
+      "approver": {
+        "id": "human:ari.platform-eng",
+        "type": "human"
+      },
+      "ticket": "CHG-104",
+      "at": "2026-11-04T03:20:00Z"
+    },
+    "ref": "run-8902"
+  }
+]

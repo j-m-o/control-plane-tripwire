@@ -1,0 +1,20 @@
+{
+  "version": "1.0",
+  "description": "Starter policy. A named human owner must review this and store it outside every monitored agent's write scope, then pin its SHA-256.",
+  "approvers": {
+    "github": ["human:REPLACE-platform-owner"],
+    "observability": ["human:REPLACE-sre-owner"],
+    "audit": ["human:REPLACE-security-owner"],
+    "agent-policy": ["human:REPLACE-security-owner"]
+  },
+  "controls": [
+    {"id": "gh.main.required_reviews", "system": "github", "resource": "repo:OWNER/REPO branch:main", "rule": {"kind": "min", "min": 2}},
+    {"id": "gh.main.enforce_admins", "system": "github", "resource": "repo:OWNER/REPO branch:main", "rule": {"kind": "safe_bool", "safe_value": true}},
+    {"id": "gh.main.required_status_checks", "system": "github", "resource": "repo:OWNER/REPO branch:main", "rule": {"kind": "must_include", "must_include": ["tests", "security-scan"]}},
+    {"id": "gh.main.allow_force_pushes", "system": "github", "resource": "repo:OWNER/REPO branch:main", "rule": {"kind": "safe_bool", "safe_value": false}},
+    {"id": "alerts.sev1.route", "system": "observability", "resource": "service:REPLACE", "rule": {"kind": "allowed_values", "allowed_values": ["pager:REPLACE-oncall"]}},
+    {"id": "audit.sink.enabled", "system": "audit", "resource": "sink:REPLACE", "rule": {"kind": "safe_bool", "safe_value": true}},
+    {"id": "audit.sink.retention_days", "system": "audit", "resource": "sink:REPLACE", "rule": {"kind": "min", "min": 365}},
+    {"id": "agent.policy.require_human_approval_prod", "system": "agent-policy", "resource": "agent:REPLACE", "rule": {"kind": "safe_bool", "safe_value": true}}
+  ]
+}

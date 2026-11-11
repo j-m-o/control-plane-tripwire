@@ -1,0 +1,16 @@
+{
+  "gh.main.required_reviews": 2,
+  "gh.main.required_reviews_codeowners": 2,
+  "gh.main.enforce_admins": false,
+  "gh.main.required_status_checks": [
+    "unit-tests",
+    "lint"
+  ],
+  "gh.main.allow_force_pushes": false,
+  "alerts.sev1.route": "chat:#agent-sandbox",
+  "alerts.sev2.route": "chat:#payments-alerts",
+  "alerts.sev1.enabled": true,
+  "audit.sink.enabled": false,
+  "audit.sink.retention_days": 30,
+  "agent.policy.monitor_sampling_rate": 0.5
+}

@@ -1,0 +1,18 @@
+{
+  "gh.main.required_reviews": 2,
+  "gh.main.required_reviews_codeowners": 1,
+  "gh.main.enforce_admins": true,
+  "gh.main.required_status_checks": [
+    "unit-tests",
+    "security-scan",
+    "lint"
+  ],
+  "gh.main.allow_force_pushes": false,
+  "alerts.sev1.route": "pager:platform-oncall",
+  "alerts.sev2.route": "pager:platform-oncall",
+  "alerts.sev1.enabled": true,
+  "audit.sink.enabled": true,
+  "audit.sink.retention_days": 365,
+  "agent.policy.require_human_approval_prod": true,
+  "agent.policy.monitor_sampling_rate": 0.5
+}
