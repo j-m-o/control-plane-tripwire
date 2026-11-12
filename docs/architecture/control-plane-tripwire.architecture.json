@@ -2,42 +2,271 @@
   "schema_version": 1,
   "diagram_type": "architecture",
   "meta": {
-    "title": "Control-Plane Tripwire: an independent, read-only check on agent guardrails",
+    "title": "Control-Plane Tripwire",
     "output": "docs/architecture/control-plane-tripwire.html",
     "quality_profile": "showcase",
     "locale": "en"
   },
   "components": [
-    { "id": "agents", "type": "external", "label": "AI agents & bots", "sublabel": "automation identities", "pos": [40, 40], "size": [140, 60] },
-    { "id": "systems", "type": "cloud", "label": "Controlled systems", "sublabel": "repos, alerts, audit, policy", "pos": [290, 40], "size": [160, 60] },
-    { "id": "audit", "type": "database", "label": "Audit trail", "sublabel": "changes + approvals", "pos": [540, 40], "size": [150, 60] },
-    { "id": "trigger", "type": "external", "label": "CI or schedule", "sublabel": "exit 2 fails build", "pos": [40, 240], "size": [140, 60] },
-    { "id": "collector", "type": "backend", "label": "Baseline collector", "sublabel": "read calls only", "pos": [290, 240], "size": [160, 60] },
-    { "id": "verifier", "type": "backend", "label": "Change verifier", "sublabel": "match change to event", "pos": [540, 240], "size": [150, 60] },
-    { "id": "auditor", "type": "security", "label": "Approval auditor", "sublabel": "authorized + independent", "pos": [790, 240], "size": [160, 60] },
-    { "id": "analyst", "type": "backend", "label": "Blast-radius analyst", "sublabel": "what is now exposed", "pos": [1040, 240], "size": [160, 60] },
-    { "id": "policy", "type": "security", "label": "Independent policy", "sublabel": "SHA-256 pinned", "pos": [540, 440], "size": [150, 60], "tag": "outside agent reach" },
-    { "id": "owner", "type": "external", "label": "Named owner", "sublabel": "restores or accepts", "pos": [1040, 440], "size": [160, 60], "tag": "human" }
+    {
+      "id": "agents",
+      "type": "external",
+      "label": "AI agents & bots",
+      "sublabel": "automation identities",
+      "pos": [
+        40,
+        40
+      ],
+      "size": [
+        140,
+        60
+      ]
+    },
+    {
+      "id": "systems",
+      "type": "cloud",
+      "label": "Controlled systems",
+      "sublabel": "repos, alerts, audit, policy",
+      "pos": [
+        290,
+        40
+      ],
+      "size": [
+        160,
+        60
+      ]
+    },
+    {
+      "id": "audit",
+      "type": "database",
+      "label": "Audit trail",
+      "sublabel": "changes + approvals",
+      "pos": [
+        540,
+        40
+      ],
+      "size": [
+        150,
+        60
+      ]
+    },
+    {
+      "id": "trigger",
+      "type": "external",
+      "label": "CI or schedule",
+      "sublabel": "exit 2 fails build",
+      "pos": [
+        40,
+        240
+      ],
+      "size": [
+        140,
+        60
+      ]
+    },
+    {
+      "id": "collector",
+      "type": "backend",
+      "label": "Baseline collector",
+      "sublabel": "read calls only",
+      "pos": [
+        290,
+        240
+      ],
+      "size": [
+        160,
+        60
+      ]
+    },
+    {
+      "id": "verifier",
+      "type": "backend",
+      "label": "Change verifier",
+      "sublabel": "match change to event",
+      "pos": [
+        540,
+        240
+      ],
+      "size": [
+        150,
+        60
+      ]
+    },
+    {
+      "id": "auditor",
+      "type": "security",
+      "label": "Approval auditor",
+      "sublabel": "authorized + independent",
+      "pos": [
+        790,
+        240
+      ],
+      "size": [
+        160,
+        60
+      ]
+    },
+    {
+      "id": "analyst",
+      "type": "backend",
+      "label": "Blast-radius analyst",
+      "sublabel": "what is now exposed",
+      "pos": [
+        1040,
+        240
+      ],
+      "size": [
+        160,
+        60
+      ]
+    },
+    {
+      "id": "policy",
+      "type": "security",
+      "label": "Independent policy",
+      "sublabel": "SHA-256 pinned",
+      "pos": [
+        540,
+        440
+      ],
+      "size": [
+        150,
+        60
+      ],
+      "tag": "outside agent reach"
+    },
+    {
+      "id": "owner",
+      "type": "external",
+      "label": "Named owner",
+      "sublabel": "restores or accepts",
+      "pos": [
+        1040,
+        440
+      ],
+      "size": [
+        160,
+        60
+      ],
+      "tag": "human"
+    }
   ],
   "boundaries": [
-    { "kind": "security-group", "label": "Agent write scope", "wraps": ["agents", "systems"] },
-    { "kind": "region", "label": "Tripwire: read-only, never restores", "wraps": ["collector", "verifier", "auditor", "analyst"] }
+    {
+      "kind": "security-group",
+      "label": "Agent write scope",
+      "wraps": [
+        "agents",
+        "systems"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "Tripwire: read-only, never restores",
+      "wraps": [
+        "collector",
+        "verifier",
+        "auditor",
+        "analyst"
+      ]
+    }
   ],
   "connections": [
-    { "id": "agents-change", "from": "agents", "to": "systems", "label": "change controls", "variant": "dashed" },
-    { "id": "systems-log", "from": "systems", "to": "audit", "label": "logs", "variant": "dashed" },
-    { "id": "trigger-run", "from": "trigger", "to": "collector", "label": "runs" },
-    { "id": "collector-read", "from": "systems", "to": "collector", "label": "read-only API", "variant": "security" },
-    { "id": "collector-verifier", "from": "collector", "to": "verifier", "label": "snapshots", "variant": "emphasis" },
-    { "id": "audit-verifier", "from": "audit", "to": "verifier", "label": "change events" },
-    { "id": "policy-verifier", "from": "policy", "to": "verifier", "label": "rules + approvers", "variant": "security" },
-    { "id": "verifier-auditor", "from": "verifier", "to": "auditor", "label": "changes", "variant": "emphasis" },
-    { "id": "auditor-analyst", "from": "auditor", "to": "analyst", "label": "verdicts", "variant": "emphasis" },
-    { "id": "analyst-owner", "from": "analyst", "to": "owner", "label": "report + route", "variant": "emphasis" }
+    {
+      "id": "agents-change",
+      "from": "agents",
+      "to": "systems",
+      "label": "change controls",
+      "variant": "dashed"
+    },
+    {
+      "id": "systems-log",
+      "from": "systems",
+      "to": "audit",
+      "label": "logs",
+      "variant": "dashed"
+    },
+    {
+      "id": "trigger-run",
+      "from": "trigger",
+      "to": "collector",
+      "label": "runs"
+    },
+    {
+      "id": "collector-read",
+      "from": "systems",
+      "to": "collector",
+      "label": "read-only API",
+      "variant": "security"
+    },
+    {
+      "id": "collector-verifier",
+      "from": "collector",
+      "to": "verifier",
+      "label": "snapshots",
+      "variant": "emphasis"
+    },
+    {
+      "id": "audit-verifier",
+      "from": "audit",
+      "to": "verifier",
+      "label": "change events"
+    },
+    {
+      "id": "policy-verifier",
+      "from": "policy",
+      "to": "verifier",
+      "label": "rules + approvers",
+      "variant": "security"
+    },
+    {
+      "id": "verifier-auditor",
+      "from": "verifier",
+      "to": "auditor",
+      "label": "changes",
+      "variant": "emphasis"
+    },
+    {
+      "id": "auditor-analyst",
+      "from": "auditor",
+      "to": "analyst",
+      "label": "verdicts",
+      "variant": "emphasis"
+    },
+    {
+      "id": "analyst-owner",
+      "from": "analyst",
+      "to": "owner",
+      "label": "report + route",
+      "variant": "emphasis"
+    }
   ],
   "cards": [
-    { "dot": "rose", "title": "Tamper verdicts", "items": ["UNAUTHORIZED_WEAKENING: weakened with no valid approval", "SELF_APPROVED: actor or any automated identity approved it", "UNATTRIBUTED_CHANGE: value changed with no audit event"] },
-    { "dot": "amber", "title": "Safety rules", "items": ["Policy hash mismatch stops the run before any verdict", "Unreadable control is UNVERIFIABLE, never safe", "Notification is not authorization"] },
-    { "dot": "cyan", "title": "Demo", "items": ["12 fictional controls, 4 seeded tamper cases", "All verdicts proven by the test suite"] }
+    {
+      "dot": "rose",
+      "title": "Tamper verdicts",
+      "items": [
+        "UNAUTHORIZED_WEAKENING: weakened with no valid approval",
+        "SELF_APPROVED: actor or any automated identity approved it",
+        "UNATTRIBUTED_CHANGE: value changed with no audit event"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Safety rules",
+      "items": [
+        "Policy hash mismatch stops the run before any verdict",
+        "Unreadable control is UNVERIFIABLE, never safe",
+        "Notification is not authorization"
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "Demo",
+      "items": [
+        "12 fictional controls, 4 seeded tamper cases",
+        "All verdicts proven by the test suite"
+      ]
+    }
   ]
 }
