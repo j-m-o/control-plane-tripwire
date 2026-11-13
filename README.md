@@ -66,9 +66,9 @@ python -m unittest discover -s tests -v
 
 | Option | Use |
 | --- | --- |
-| `dist/control-plane-tripwire.zip` | Upload as a skill (Claude, Agensi or any SKILL.md agent) |
+| `dist/control-plane-tripwire.zip` | Upload as a skill ([Claude](https://claude.ai), [Agensi](https://agensi.io) or any SKILL.md agent) |
 | `skills/control-plane-tripwire/` | Copy into `~/.claude/skills/` |
-| `agents/control-plane-tripwire.md` | Copy into `.claude/agents/` to run it as a Claude Code agent |
+| `agents/control-plane-tripwire.md` | Copy into `.claude/agents/` to run it as a [Claude Code](https://www.anthropic.com/claude-code) agent |
 
 Build with `python scripts/build.py`. Validate with `python scripts/validate.py`.
 
